@@ -7,3 +7,5 @@ services:
     container_name: singles_grades_getter
     volumes:
       - /etc/localtime:/etc/localtime:ro
+    environment:
+      - SINGLES_URL=https://singles.tsukuda.ac.jp # 最後のスラッシュは不要
