@@ -19,13 +19,13 @@ html_template = """
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Twins成績Jsonパーサー</title>
+  <title>Singles成績Jsonパーサー</title>
 </head>
 <body>
-<h1>Twins成績Jsonパーサー</h1>
+<h1>Singles成績Jsonパーサー</h1>
 <form method="post" action="/scrape">
-  ユーザーID: <input type="text" name="twins_user" required><br>
-  パスワード: <input type="password" name="twins_pass" required><br>
+  ユーザーID: <input type="text" name="user" required><br>
+  パスワード: <input type="password" name="pass" required><br>
   <input type="submit" value="スクレイピング実行">
 </form>
 </body>
@@ -109,8 +109,8 @@ def index():
 
 @app.route("/scrape", methods=["POST"])
 def scrape_endpoint():
-    user = request.form.get("twins_user") or (request.json and request.json.get("twins_user"))
-    pwd = request.form.get("twins_pass") or (request.json and request.json.get("twins_pass"))
+    user = request.form.get("user") or (request.json and request.json.get("user"))
+    pwd = request.form.get("pass") or (request.json and request.json.get("pass"))
     if not user or not pwd:
         return jsonify({"error": "認証情報が不足しています"}), 400
     data = scrape_grades(user, pwd)
@@ -128,8 +128,8 @@ def grades_api():
     content = request.get_json()
     if not content:
         return jsonify({"error": "JSON body is required"}), 400
-    user = content.get("twins_user")
-    pwd = content.get("twins_pass")
+    user = content.get("user")
+    pwd = content.get("pass")
     if not user or not pwd:
         return jsonify({"error": "認証情報が不足しています"}), 400
     data = scrape_grades(user, pwd)

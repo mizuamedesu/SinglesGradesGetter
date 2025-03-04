@@ -1,6 +1,6 @@
 ## セットアップ
 ```
-docker compose up --build
+docker compose up
 ```
 ## WebUI
 
@@ -9,7 +9,7 @@ http://localhost:8080/
 ## APIエンドポイント
 
 ```
-curl -X POST http://localhost:8080/grades -H "Content-Type: application/json" -d "{\"twins_user\": \"your_username\", \"twins_pass\": \"your_password\"}"
+curl -X POST http://localhost:8080/grades -H "Content-Type: application/json" -d "{\"user\": \"your_username\", \"pass\": \"your_password\"}"
 ```
 
 ## 何ができるのか？
@@ -35,4 +35,6 @@ curl -X POST http://localhost:8080/grades -H "Content-Type: application/json" -d
 
 ## 注意
 
-実在する組織、団体、ウェブサイト等とは一切関係ありません。実行によって生じた一切の責任を負いません。
+仮想の筑田大学で用いられているSinglesをスクレイピングするツールです。実在する組織、団体、ウェブサイト等とは一切関係ありません。
+実行によって生じた一切の責任を負いません。
+

@@ -4,6 +4,6 @@ services:
     build: .
     ports:
       - "8080:8080"
-    container_name: twins_grades_getter
+    container_name: singles_grades_getter
     volumes:
       - /etc/localtime:/etc/localtime:ro
