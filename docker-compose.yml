@@ -7,4 +7,3 @@ services:
     container_name: twins_grades_getter
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
