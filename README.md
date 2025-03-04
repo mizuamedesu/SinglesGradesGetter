@@ -2,6 +2,16 @@
 ```
 docker compose up
 ```
+
+## よくわからないですけど...
+
+なぜかこのリポジトリの使用者はcompose.ymlの
+```
+    environment:
+      - SINGLES_URL=https://singles.tsukuda.ac.jp # 最後のスラッシュは不要
+```
+ここを書き換えるみたいですね。よくわからないんですけどね～なんででしょうね？
+
 ## WebUI
 
 http://localhost:8080/
