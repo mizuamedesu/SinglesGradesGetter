@@ -2,6 +2,7 @@ from flask import Flask, request, render_template_string, jsonify, Response
 import time
 import json
 import urllib.parse
+import os
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -10,6 +11,11 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service as ChromeService
 from bs4 import BeautifulSoup
+
+# 環境変数からSINGLES_URLを取得（必須）
+SINGLES_URL = os.environ.get("SINGLES_URL")
+if not SINGLES_URL:
+    raise ValueError("'SINGLES_URL' is not set in environment variables")
 
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False
@@ -43,7 +49,7 @@ def scrape_grades(user, pwd):
     driver = webdriver.Chrome(service=ChromeService(service), options=options)
     driver.set_window_size(1280, 800)
     try:
-        driver.get("https://twins.tsukuba.ac.jp/campusweb/campusportal.do")
+        driver.get(f"{SINGLES_URL}/campusweb/campusportal.do")
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "wf_PTW0000011_20120827233559-form")))
         time.sleep(1)
         driver.find_element(By.NAME, "userName").clear()
@@ -53,7 +59,7 @@ def scrape_grades(user, pwd):
         driver.find_element(By.XPATH, '//button[@type="submit"]').click()
         WebDriverWait(driver, 15).until(EC.title_contains("CampusSquare for WEB"))
         time.sleep(2)
-        driver.get("https://twins.tsukuba.ac.jp/campusweb/campussquare.do?_flowId=SIW0001200-flow")
+        driver.get(f"{SINGLES_URL}/campusweb/campussquare.do?_flowId=SIW0001200-flow")
         WebDriverWait(driver, 15).until(lambda d: "_flowExecutionKey=" in d.current_url)
         redirected_url = driver.current_url
         parsed = urllib.parse.urlparse(redirected_url)
@@ -62,7 +68,7 @@ def scrape_grades(user, pwd):
         if not flow_key:
             driver.quit()
             return None
-        new_url = f"https://twins.tsukuba.ac.jp/campusweb/campussquare.do?_flowExecutionKey={flow_key}"
+        new_url = f"{SINGLES_URL}/campusweb/campussquare.do?_flowExecutionKey={flow_key}"
         driver.get(new_url)
         WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.TAG_NAME, "body")))
         time.sleep(2)
