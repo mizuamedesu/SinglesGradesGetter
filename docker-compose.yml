@@ -4,4 +4,7 @@ services:
     build: .
     ports:
       - "8080:8080"
-    container_name: twins-json
+    container_name: twins_grades_getter
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
